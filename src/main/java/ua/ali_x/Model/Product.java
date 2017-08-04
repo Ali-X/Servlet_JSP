@@ -2,21 +2,23 @@ package ua.ali_x.Model;
 
 public class Product {
 
-    private Long id;
+    private Integer id;
     private String name;
-    private String decription;
+    private String description;
+    private Integer c_id;
 
-    public Product(Long id, String name, String decription) {
+    public Product(Integer id, String name, String description, Integer c_id) {
         this.id = id;
         this.name = name;
-        this.decription = decription;
+        this.description = description;
+        this.c_id = c_id;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -28,11 +30,19 @@ public class Product {
         this.name = name;
     }
 
-    public String getDecription() {
-        return decription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDecription(String decription) {
-        this.decription = decription;
+    public void setDescription(String decription) {
+        this.description = decription;
+    }
+
+    public Integer getC_id() {
+        return c_id;
+    }
+
+    public void setC_id(Integer c_id) {
+        this.c_id = c_id;
     }
 }

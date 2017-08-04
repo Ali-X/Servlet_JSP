@@ -1,17 +1,22 @@
 package ua.ali_x.DAO;
 
 import ua.ali_x.Model.Category;
-import ua.ali_x.Model.Product;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAOImpl extends DAO<Category> implements CategoryDAO {
+public class CategoryDAOImpl extends AbstractDAO<Category> implements CategoryDAO {
 
-    private List<Category> categories = new ArrayList<Category>();
+    public CategoryDAOImpl(Connection connection) {
+        super(connection);
+    }
 
-    public void create(Category category) {
-        categories.add(category);
+    public Category create(Category category) {
+        return category;
     }
 
     public Category delete(Category category) {
@@ -22,20 +27,29 @@ public class CategoryDAOImpl extends DAO<Category> implements CategoryDAO {
         return null;
     }
 
-    public Category findById(Long id) {
+    public Category get(Category category) {
         return null;
     }
 
     public List<Category> getAll() {
-        return categories;
-    }
-
-    public List<Product> getProducts(Long id) {
-        for (Category category: categories) {
-            if (category.getId().equals(id)) {
-                return  category.getProductList();
+        List<Category> list = new ArrayList<Category>();
+        Category category = null;
+        Integer id = null;
+        String name = null;
+        try {
+            PreparedStatement preparedStatement;
+            String preparedQuery = "SELECT * FROM CATEGORY";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("ID");
+                name = rs.getString("NAME");
+                category = new Category(id, name);
+                list.add(category);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+        return list;
     }
 }

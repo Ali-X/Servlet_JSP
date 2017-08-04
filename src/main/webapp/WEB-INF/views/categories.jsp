@@ -66,7 +66,7 @@
                 <div class="dropdown-content">
                         <c:forEach var="cat" items="${categories}">
                             <a href="
-                                <c:url value="/category">
+                                <c:url value="/root/category">
                                     <c:param name="c_id" value="${cat.id}" />
                                 </c:url>
                             "><c:out value="${cat.name}"/></h1></a>
@@ -77,6 +77,7 @@
         </th>
     </tr>
 </table>
+<a href="<c:url value="/root/home"/> ">Home</a>
 </body>
 </html>
 

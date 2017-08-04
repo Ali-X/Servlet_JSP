@@ -11,6 +11,14 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUser(User user) {
-        return userDao.getUser(user);
+        return userDao.get(user);
+    }
+
+    public User findUser(String name, String password) {
+        return userDao.findByNamePassword(name, password);
+    }
+
+    public void create(User user) {
+        userDao.create(user);
     }
 }

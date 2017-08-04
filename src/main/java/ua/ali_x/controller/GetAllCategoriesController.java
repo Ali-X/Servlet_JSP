@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GetAllCategoriesController {
+public class GetAllCategoriesController extends AbstractController {
 
     private CategoryService categoryService;
 
@@ -16,7 +16,7 @@ public class GetAllCategoriesController {
     }
 
     public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("categories" , categoryService.getAll());
+        request.setAttribute("categories", categoryService.getAll());
     }
 
 }

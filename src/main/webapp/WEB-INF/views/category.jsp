@@ -65,12 +65,18 @@
                 <button class="dropbtn">Products</button>
                 <div class="dropdown-content">
                     <c:forEach var="pr" items="${products}">
-                        <a href="#"><c:out value="${pr.name}"/></h1></a>
+                        <a href="
+                                <c:url value="/root/product">
+                                    <c:param name="c_id" value="${param.c_id}" />
+                                    <c:param name="p_id" value="${pr.id}" />
+                                </c:url>
+                            "><c:out value="${pr.name}"/></h1></a>
                     </c:forEach>
                 </div>
             </div>
         </th>
     </tr>
 </table>
+<a href="<c:url value="/root/home"/> ">Home</a>
 </body>
 </html>

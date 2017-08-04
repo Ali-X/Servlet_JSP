@@ -7,23 +7,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ProductController extends AbstractController {
+public class CategoryController extends AbstractController {
 
     private ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public CategoryController(ProductService productService) {
         this.productService = productService;
     }
 
     public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Integer idCategory = Integer.parseInt(request.getParameter("c_id"));
-            Integer idProduct = Integer.parseInt(request.getParameter("p_id"));
-            request.setAttribute("product", productService.getProduct(idCategory, idProduct));
-            request.getRequestDispatcher("/WEB-INF/views/product.jsp").forward(request, response);
+            request.setAttribute("products", productService.getAll(idCategory));
+            request.getRequestDispatcher("/WEB-INF/views/category.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             request.getRequestDispatcher("/root/profile").forward(request, response);
         }
     }
-
 }

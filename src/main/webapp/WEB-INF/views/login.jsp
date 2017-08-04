@@ -12,7 +12,7 @@
     <title>Login</title>
 </head>
 <body>
-    <form method="post" action="<c:url value="/login"/>">
+    <form method="post" action="<c:url value="/root/login"/>">
         Login:<br>
         <input title="UserName" type="text" name="userName">
         <br><br>
@@ -20,6 +20,9 @@
         <input title="Password" type="password" name="password">
         <br><br>
         <input type="submit" value="Submit">
+        <br><br>
+        <a href="<c:url value="/root/registration"/> ">Registration</a>
     </form>
+    <a href="<c:url value="/root/home"/> ">Home</a>
 </body>
 </html>

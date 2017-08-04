@@ -5,5 +5,8 @@ import ua.ali_x.Model.User;
 public interface UserDAO {
 
     User getUser(User user);
+    User findByToken(String token);
+    User findByNamePassword(String name, String password);
+    boolean isAdmin(User user);
 
 }

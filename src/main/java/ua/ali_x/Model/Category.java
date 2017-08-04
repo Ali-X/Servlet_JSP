@@ -3,21 +3,19 @@ package ua.ali_x.Model;
 import java.util.List;
 
 public class Category {
-    private Long id;
+    private Integer id;
     private String name;
-    private List<Product> productList;
 
-    public Category(Long id, String name, List<Product> productList) {
+    public Category(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.productList = productList;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -29,11 +27,4 @@ public class Category {
         this.name = name;
     }
 
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
 }
