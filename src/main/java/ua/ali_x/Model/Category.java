@@ -1,7 +1,5 @@
 package ua.ali_x.Model;
 
-import java.util.List;
-
 public class Category {
     private Integer id;
     private String name;

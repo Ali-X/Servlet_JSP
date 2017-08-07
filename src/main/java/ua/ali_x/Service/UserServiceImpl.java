@@ -18,6 +18,10 @@ public class UserServiceImpl implements UserService {
         return userDao.findByNamePassword(name, password);
     }
 
+    public User findByToken(String token) {
+        return userDao.findByToken(token);
+    }
+
     public void create(User user) {
         userDao.create(user);
     }

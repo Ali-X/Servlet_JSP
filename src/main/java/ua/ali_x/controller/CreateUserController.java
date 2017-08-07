@@ -1,31 +1,41 @@
 package ua.ali_x.controller;
 
 import ua.ali_x.Model.User;
+import ua.ali_x.Service.CategoryService;
 import ua.ali_x.Service.UserService;
+import ua.ali_x.factory.Factory;
+import ua.ali_x.servlet.Request;
+import ua.ali_x.servlet.ViewModel;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-public class CreateUserController extends AbstractController{
+public class CreateUserController implements Controller {
 
     private UserService userService;
+    private CategoryService categoryService;
 
-    public CreateUserController(UserService userService) {
+    public CreateUserController(UserService userService, CategoryService categoryService) {
         this.userService = userService;
+        this.categoryService = categoryService;
     }
 
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
+    @Override
+    public ViewModel process(Request request) {
+        ViewModel vm = Factory.getViewModel();
+        String userName = (String) vm.getAttribute("userName");
+        String password = (String) vm.getAttribute("password");
+        String email = (String) vm.getAttribute("email");
         String token = userName + System.nanoTime();
-
         User user = new User(null, userName, password, email, token);
         userService.create(user);
-        request.setAttribute("user", user);
-        response.addCookie(new Cookie("token", user.getToken()));
+        vm.setAttribute("user", user);
+        vm.setCookie(new Cookie("token", user.getToken()));
+        if (user.isiAmAdmin()) {
+            vm.setView("admin");
+        } else {
+            vm.setView("categories");
+            vm.setAttribute("categories", categoryService.getAll());
+        }
+        return vm;
     }
 }

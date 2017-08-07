@@ -7,22 +7,20 @@ import ua.ali_x.factory.Factory;
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminFilter implements Filter{
+public class AdminFilter implements Filter {
 
-    private UserDAOImpl userDAO;
     private final String TOKEN = "token";
+    private UserDAOImpl userDAO;
     private List<String> protectedUrls = new ArrayList<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         userDAO = Factory.getUserDao();
         protectedUrls.add("/root/admin");
-        protectedUrls.add("/root/profile");
     }
 
     @Override
@@ -36,18 +34,19 @@ public class AdminFilter implements Filter{
             Boolean iAmAdmin;
             for (Cookie cookie : cookies) {
                 String name = cookie.getName().toLowerCase();
-                if (TOKEN.equals(name)){
+                if (TOKEN.equals(name)) {
                     token = cookie.getValue();
-                    iAmAdmin = userDAO.isAdmin(userDAO.findByToken(token));
                     User user = userDAO.findByToken(token);
-                    request.setAttribute("user", user);
+                    iAmAdmin = user.isiAmAdmin();
                     if (iAmAdmin) {
-                        request.getRequestDispatcher("/WEB-INF/views/admin.jsp").forward(request, response);
+                        request.setAttribute("user", user);
+                    } else {
+                        request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
                     }
                 }
             }
             if (token == null) {
-                    request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
             }
         }
         chain.doFilter(request, response);

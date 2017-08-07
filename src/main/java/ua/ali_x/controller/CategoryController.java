@@ -1,13 +1,11 @@
 package ua.ali_x.controller;
 
 import ua.ali_x.Service.ProductService;
+import ua.ali_x.factory.Factory;
+import ua.ali_x.servlet.Request;
+import ua.ali_x.servlet.ViewModel;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-public class CategoryController extends AbstractController {
+public class CategoryController implements Controller {
 
     private ProductService productService;
 
@@ -15,13 +13,12 @@ public class CategoryController extends AbstractController {
         this.productService = productService;
     }
 
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            Integer idCategory = Integer.parseInt(request.getParameter("c_id"));
-            request.setAttribute("products", productService.getAll(idCategory));
-            request.getRequestDispatcher("/WEB-INF/views/category.jsp").forward(request, response);
-        } catch (NumberFormatException e) {
-            request.getRequestDispatcher("/root/profile").forward(request, response);
-        }
+    @Override
+    public ViewModel process(Request request) {
+        ViewModel vm = Factory.getViewModel();
+        Integer idCategory = Integer.parseInt((String) vm.getAttribute("c_id"));
+        vm.setAttribute("products", productService.getAll(idCategory));
+        vm.setView("category");
+        return vm;
     }
 }

@@ -10,46 +10,33 @@ public class User {
     private String password;
     private String token;
     private String email;
+    private boolean iAmAdmin;
 
-    public User(Integer id, String userName, String password,  String email, String token) {
+    public User(Integer id, String userName, String password, String email, String token) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.token = token;
+        this.iAmAdmin = isAdmin(userName, password);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public boolean isiAmAdmin() {
+        return iAmAdmin;
     }
 
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -73,7 +60,11 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public boolean isAdmin(String userName, String password) {
+        if (userName.equals("admin") && password.equals("admin")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

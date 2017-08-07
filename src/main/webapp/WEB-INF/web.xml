@@ -21,16 +21,6 @@
     </servlet-mapping>
 
     <filter>
-        <filter-name>UserFilter</filter-name>
-        <filter-class>ua.ali_x.filter.UserFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>UserFilter</filter-name>
-        <url-pattern>/root/*</url-pattern>
-    </filter-mapping>
-
-    <filter>
         <filter-name>AdminFilter</filter-name>
         <filter-class>ua.ali_x.filter.AdminFilter</filter-class>
     </filter>

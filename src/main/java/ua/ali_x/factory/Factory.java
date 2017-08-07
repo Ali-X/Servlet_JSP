@@ -3,12 +3,17 @@ package ua.ali_x.factory;
 import ua.ali_x.DAO.*;
 import ua.ali_x.Service.*;
 import ua.ali_x.controller.*;
+import ua.ali_x.servlet.Request;
+import ua.ali_x.servlet.ViewModel;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Factory {
+
+    private static ViewModel vm = new ViewModel();
 
     //db
     public static Connection getConnection() {
@@ -24,7 +29,7 @@ public class Factory {
 
     //user
     public static GetUserController getUserController() {
-        return new GetUserController(Factory.getUserService());
+        return new GetUserController(Factory.getUserService(), Factory.getCategoriesService());
     }
 
     private static UserService getUserService() {
@@ -36,8 +41,8 @@ public class Factory {
     }
 
     //category
-    public static GetAllCategoriesController getAllCategoriesController() {
-        return new GetAllCategoriesController(Factory.getCategoriesService());
+    public static CategoriesPageController getCategoriesPageController() {
+        return new CategoriesPageController(Factory.getCategoriesService());
     }
 
     public static CategoryService getCategoriesService() {
@@ -66,7 +71,7 @@ public class Factory {
     }
 
     public static CreateUserController getCreateUserController() {
-        return new CreateUserController(Factory.getUserService());
+        return new CreateUserController(Factory.getUserService(), Factory.getCategoriesService());
     }
 
     //admin
@@ -74,17 +79,38 @@ public class Factory {
         return new AdminController(Factory.getUserService());
     }
 
-    //pages
-    public static HashMap<String, String> getPages(){
-        HashMap<String, String> pages = new HashMap<>();
-        pages.put("/root/admin", "/WEB-INF/views/admin.jsp");
-        pages.put("/root/categories", "/WEB-INF/views/categories.jsp");
-        pages.put("/root/category", "/WEB-INF/views/category.jsp");
-        pages.put("/root/home", "/WEB-INF/views/home.jsp");
-        pages.put("/root/login", "/WEB-INF/views/login.jsp");
-        pages.put("/root/product", "/WEB-INF/views/product.jsp");
-        pages.put("/root/registration", "/WEB-INF/views/registration.jsp");
-        pages.put("/root/profile", "/WEB-INF/views/categories.jsp");
-        return pages;
+    public static Map<Request, Controller> getControllerMap() {
+        Map<Request, Controller> controllerMap = new HashMap<>();
+        controllerMap.put(new Request("GET", "/root/home"), Factory.getHomeController());
+        controllerMap.put(new Request("GET", "/root/admin"), Factory.getAdminController());
+        controllerMap.put(new Request("GET", "/root/categories"), Factory.getCategoriesPageController());
+        controllerMap.put(new Request("GET", "/root/category"), Factory.getCategoryController());
+        controllerMap.put(new Request("GET", "/root/login"), Factory.getLoginPageController());
+        controllerMap.put(new Request("GET", "/root/product"), Factory.getProductController());
+        controllerMap.put(new Request("GET", "/root/registration"), Factory.getRegistrationPageController());
+        controllerMap.put(new Request("GET", "/root/profile"), Factory.getProfileController());
+        controllerMap.put(new Request("POST", "/root/login"), Factory.getUserController());
+        controllerMap.put(new Request("POST", "/root/registration"), Factory.getCreateUserController());
+        return controllerMap;
+    }
+
+    private static Controller getProfileController() {
+        return new ProfileController(Factory.getUserService(), Factory.getCategoriesService());
+    }
+
+    private static Controller getRegistrationPageController() {
+        return new RegistrationPageController();
+    }
+
+    private static Controller getLoginPageController() {
+        return new LoginPageController();
+    }
+
+    private static Controller getHomeController() {
+        return new HomePageController();
+    }
+
+    public static ViewModel getViewModel() {
+        return vm;
     }
 }

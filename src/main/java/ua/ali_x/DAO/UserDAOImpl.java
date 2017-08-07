@@ -2,9 +2,10 @@ package ua.ali_x.DAO;
 
 import ua.ali_x.Model.User;
 
-import java.sql.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 
@@ -92,13 +93,4 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         }
         return user;
     }
-
-    public boolean isAdmin(User user) {
-        if (user.getUserName().equals("admin") && user.getPassword().equals("admin")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }
