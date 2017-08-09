@@ -98,10 +98,10 @@ Hello ${requestScope.user.userName}!
             <h3>Update product</h3>
             <form method="post" action="<c:url value="/root/p_upd"/>">
                 Old Product Name:<br>
-                <input title="Old Category Name" type="text" name="old_p_name">
+                <input title="Old Product Name" type="text" name="old_p_name">
                 <br><br>
                 New Product Name:<br>
-                <input title="New Category Name" type="text" name="new_p_name">
+                <input title="New Product Name" type="text" name="new_p_name">
                 <br><br>
                 Product description:<br>
                 <input title="Product description" type="text" name="p_descr">

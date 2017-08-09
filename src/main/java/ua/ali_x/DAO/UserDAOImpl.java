@@ -1,6 +1,5 @@
 package ua.ali_x.DAO;
 
-import org.h2.jdbc.JdbcSQLException;
 import ua.ali_x.Model.Roles;
 import ua.ali_x.Model.User;
 
@@ -17,11 +16,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         super(connection);
     }
 
-    public User get(User user) {
-        return null;
-    }
-
-    public User create(User user) {
+    public void create(User user) {
         try {
             PreparedStatement preparedStatement;
             String preparedQuery = "INSERT INTO USERS (USERNAME, TOKEN, PASSWORD, EMAIL) VALUES(?,?,?,?)";
@@ -34,19 +29,14 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         } catch (SQLException e) {
             throw new RuntimeException("There are problems with authentication" + e);
         }
-        return user;
     }
 
-    public User delete(User user) {
-        return null;
+    public void delete(User user) {
+
     }
 
-    public User update(User user) {
-        return null;
-    }
+    public void update(User user) {
 
-    public User getUser(User user) {
-        return null;
     }
 
     public User findByToken(String token) {

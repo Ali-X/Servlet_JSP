@@ -9,31 +9,82 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDAOImpl extends AbstractDAO<Product> implements ProductDAO {
+public class ProductDAOImpl extends AbstractDAO<String> implements ProductDAO {
 
     public ProductDAOImpl(Connection connection) {
         super(connection);
     }
 
-    public Product create(Product item) {
-        return null;
+    public void create(String name, String description, String c_name) {
+        int c_id = 0;
+        try {
+            PreparedStatement preparedStatement;
+            String preparedQuery = "SELECT ID FROM CATEGORY WHERE NAME = ?";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            preparedStatement.setString(1, c_name);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                c_id = rs.getInt(1);
+            }
+            preparedQuery = "INSERT INTO PRODUCT (NAME, DESCRIPTION, C_ID) VALUES (?, ?, ?)";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, description);
+            preparedStatement.setInt(3, c_id);
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("There are problems with authentication" + e);
+        }
     }
 
-    public Product delete(Product item) {
-        return null;
+    @Override
+    public void create(String s) {
+
     }
 
-    public Product update(Product item) {
-        return null;
+    public void delete(String item) {
+        try {
+            PreparedStatement preparedStatement;
+            String preparedQuery = "DELETE FROM PRODUCT WHERE NAME = ?";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            preparedStatement.setString(1, item);
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("There are problems with authentication" + e);
+        }
     }
 
-    public Product get(Product product) {
-        return null;
+    @Override
+    public void update(String s) {
+
     }
 
-    public Product findById(Long id) {
-        return null;
+    public void update(String old_name, String new_name, String new_descr, String c_name) {
+        int c_id = 0;
+        try {
+            PreparedStatement preparedStatement;
+            String preparedQuery = "SELECT ID FROM CATEGORY WHERE NAME = ?";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            preparedStatement.setString(1, c_name);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                c_id = rs.getInt(1);
+            }
+            preparedQuery = "UPDATE PRODUCT SET NAME = ?, DESCRIPTION = ?, C_ID = ? WHERE NAME = ?";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            preparedStatement.setString(1, new_name);
+            preparedStatement.setString(2, new_descr);
+            preparedStatement.setInt(3, c_id);
+            preparedStatement.setString(4, old_name);
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("There are problems with authentication" + e);
+        }
     }
+
 
     public List<Product> getAll(Integer c_id) {
         List<Product> list = new ArrayList<Product>();

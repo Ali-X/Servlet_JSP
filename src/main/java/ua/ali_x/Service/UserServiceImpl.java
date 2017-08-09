@@ -10,10 +10,6 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    public User getUser(User user) {
-        return userDao.get(user);
-    }
-
     public User findUser(String name, String password) {
         return userDao.findByNamePassword(name, password);
     }

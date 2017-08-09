@@ -3,6 +3,7 @@ package ua.ali_x.factory;
 import ua.ali_x.DAO.*;
 import ua.ali_x.Service.*;
 import ua.ali_x.controller.*;
+import ua.ali_x.controller.dataBase.*;
 import ua.ali_x.servlet.Request;
 import ua.ali_x.servlet.ViewModel;
 
@@ -91,7 +92,38 @@ public class Factory {
         controllerMap.put(new Request("GET", "/root/profile"), Factory.getProfileController());
         controllerMap.put(new Request("POST", "/root/login"), Factory.getUserController());
         controllerMap.put(new Request("POST", "/root/registration"), Factory.getCreateUserController());
+
+        controllerMap.put(new Request("POST", "/root/c_add"), Factory.getC_addController());
+        controllerMap.put(new Request("POST", "/root/p_add"), Factory.getP_addController());
+        controllerMap.put(new Request("POST", "/root/c_del"), Factory.getC_delController());
+        controllerMap.put(new Request("POST", "/root/p_del"), Factory.getP_delController());
+        controllerMap.put(new Request("POST", "/root/c_upd"), Factory.getC_updController());
+        controllerMap.put(new Request("POST", "/root/p_upd"), Factory.getP_updController());
         return controllerMap;
+    }
+
+    private static Controller getP_updController() {
+        return new p_updController(Factory.getProductService());
+    }
+
+    private static Controller getC_updController() {
+        return new c_updController(Factory.getCategoriesService());
+    }
+
+    private static Controller getP_delController() {
+        return new p_delController(Factory.getProductService());
+    }
+
+    private static Controller getC_delController() {
+        return new c_delController(Factory.getCategoriesService());
+    }
+
+    private static Controller getP_addController() {
+        return new p_addController(Factory.getProductService());
+    }
+
+    private static Controller getC_addController() {
+        return new c_addController(Factory.getCategoriesService());
     }
 
     private static Controller getProfileController() {

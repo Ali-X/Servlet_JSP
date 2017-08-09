@@ -9,26 +9,55 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAOImpl extends AbstractDAO<Category> implements CategoryDAO {
+public class CategoryDAOImpl extends AbstractDAO<String> implements CategoryDAO {
 
     public CategoryDAOImpl(Connection connection) {
         super(connection);
     }
 
-    public Category create(Category category) {
-        return category;
+    public void create(String category) {
+        try {
+            PreparedStatement preparedStatement;
+            String preparedQuery = "INSERT INTO CATEGORY (NAME) VALUES(?)";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            preparedStatement.setString(1, category);
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("There are problems with authentication" + e);
+        }
     }
 
-    public Category delete(Category category) {
-        return null;
+    public void delete(String category) {
+        try {
+            PreparedStatement preparedStatement;
+            String preparedQuery = "DELETE FROM CATEGORY WHERE NAME = ?";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            preparedStatement.setString(1, category);
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("There are problems with authentication" + e);
+        }
     }
 
-    public Category update(Category category) {
-        return null;
+    @Override
+    public void update(String s) {
+
     }
 
-    public Category get(Category category) {
-        return null;
+    public void update(String old_name, String new_name) {
+        try {
+            PreparedStatement preparedStatement;
+            String preparedQuery = "UPDATE CATEGORY SET NAME = ? WHERE NAME = ?";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            preparedStatement.setString(1, new_name);
+            preparedStatement.setString(2, old_name);
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("There are problems with authentication" + e);
+        }
     }
 
     public List<Category> getAll() {

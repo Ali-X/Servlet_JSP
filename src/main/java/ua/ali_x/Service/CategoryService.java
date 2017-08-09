@@ -8,4 +8,11 @@ public interface CategoryService {
 
     List<Category> getAll();
 
+    void create(String name);
+
+    void delete(String name);
+
+    void update(String old_name, String new_name);
+
+
 }
