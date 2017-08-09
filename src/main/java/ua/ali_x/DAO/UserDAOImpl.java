@@ -1,11 +1,15 @@
 package ua.ali_x.DAO;
 
+import org.h2.jdbc.JdbcSQLException;
+import ua.ali_x.Model.Roles;
 import ua.ali_x.Model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 
@@ -28,6 +32,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.execute();
         } catch (SQLException e) {
+            new RuntimeException("There are problems with authentication");
             e.printStackTrace();
         }
         return user;
@@ -51,9 +56,14 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         String name = null;
         String password = null;
         String email = null;
+        Set<Roles> roles = new HashSet<Roles>();
         try {
             PreparedStatement preparedStatement;
-            String preparedQuery = "SELECT * FROM USERS WHERE TOKEN = ?";
+            String preparedQuery = "SELECT  U.ID, U.USERNAME, U.PASSWORD, U.TOKEN, U.EMAIL, R.NAME " +
+                    "FROM USERS U " +
+                    "JOIN USERTOROLE UR ON UR.USERID=U.ID " +
+                    "JOIN ROLES R ON R.ID = UR.ROLEID " +
+                    "WHERE U.TOKEN = ?;";
             preparedStatement = connection.prepareStatement(preparedQuery);
             preparedStatement.setString(1, token);
             ResultSet rs = preparedStatement.executeQuery();
@@ -62,9 +72,12 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
                 name = rs.getString("USERNAME");
                 password = rs.getString("PASSWORD");
                 email = rs.getString("EMAIL");
-                user = new User(id, name, password, email, token);
+                roles.add(Roles.valueOf(rs.getString("NAME")));
             }
+            preparedStatement.close();
+            user = new User(id, name, password, email, token, roles);
         } catch (SQLException e) {
+            new RuntimeException("There are problems with authentication");
             e.printStackTrace();
         }
         return user;
@@ -75,9 +88,15 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         Integer id = null;
         String email = null;
         String token = null;
+        Set<Roles> roles = new HashSet<Roles>();
         try {
             PreparedStatement preparedStatement;
-            String preparedQuery = "SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ?";
+            String preparedQuery = "SELECT  U.ID, U.USERNAME, U.PASSWORD, U.TOKEN, U.EMAIL, R.NAME " +
+                    "FROM USERS U " +
+                    "JOIN USERTOROLE UR ON UR.USERID=U.ID " +
+                    "JOIN ROLES R ON R.ID = UR.ROLEID " +
+                    "WHERE U.USERNAME = ? " +
+                    "AND U.PASSWORD = ?";
             preparedStatement = connection.prepareStatement(preparedQuery);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -86,9 +105,12 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
                 id = rs.getInt("ID");
                 email = rs.getString("EMAIL");
                 token = rs.getString("TOKEN");
-                user = new User(id, name, password, email, token);
+                roles.add(Roles.valueOf(rs.getString("NAME")));
             }
+            preparedStatement.close();
+            user = new User(id, name, password, email, token, roles);
         } catch (SQLException e) {
+            new RuntimeException("There are problems with authentication");
             e.printStackTrace();
         }
         return user;

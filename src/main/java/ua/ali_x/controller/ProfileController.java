@@ -1,5 +1,6 @@
 package ua.ali_x.controller;
 
+import ua.ali_x.Model.Roles;
 import ua.ali_x.Model.User;
 import ua.ali_x.Service.CategoryService;
 import ua.ali_x.Service.UserService;
@@ -33,9 +34,8 @@ public class ProfileController implements Controller {
             if (TOKEN.equals(name)) {
                 token = cookie.getValue();
                 User user = userService.findByToken(token);
-                iAmAdmin = user.isiAmAdmin();
                 vm.setAttribute("user", user);
-                if (iAmAdmin) {
+                if (user.getRoles().contains(Roles.ADMIN)) {
                     vm.setView("admin");
                 } else {
                     vm.setAttribute("categories", categoryService.getAll());

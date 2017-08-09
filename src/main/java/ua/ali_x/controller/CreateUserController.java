@@ -1,5 +1,6 @@
 package ua.ali_x.controller;
 
+import ua.ali_x.Model.Roles;
 import ua.ali_x.Model.User;
 import ua.ali_x.Service.CategoryService;
 import ua.ali_x.Service.UserService;
@@ -26,11 +27,11 @@ public class CreateUserController implements Controller {
         String password = (String) vm.getAttribute("password");
         String email = (String) vm.getAttribute("email");
         String token = userName + System.nanoTime();
-        User user = new User(null, userName, password, email, token);
+        User user = new User(null, userName, password, email, token, null );
         userService.create(user);
         vm.setAttribute("user", user);
         vm.setCookie(new Cookie("token", user.getToken()));
-        if (user.isiAmAdmin()) {
+        if (user.getRoles().contains(Roles.ADMIN)) {
             vm.setView("admin");
         } else {
             vm.setView("categories");

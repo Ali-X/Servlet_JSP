@@ -1,6 +1,7 @@
 package ua.ali_x.filter;
 
 import ua.ali_x.DAO.UserDAOImpl;
+import ua.ali_x.Model.Roles;
 import ua.ali_x.Model.User;
 import ua.ali_x.factory.Factory;
 
@@ -31,22 +32,24 @@ public class AdminFilter implements Filter {
 
         if (protectedUrls.contains(uri)) {
             String token = null;
-            Boolean iAmAdmin;
             for (Cookie cookie : cookies) {
                 String name = cookie.getName().toLowerCase();
                 if (TOKEN.equals(name)) {
                     token = cookie.getValue();
+                    if (token == "") {
+                        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+                    }
                     User user = userDAO.findByToken(token);
-                    iAmAdmin = user.isiAmAdmin();
-                    if (iAmAdmin) {
+                    if (user.getRoles().contains(Roles.ADMIN)) {
                         request.setAttribute("user", user);
-                    } else {
+                    }
+                    if (user.getRoles().contains(Roles.USER)) {
                         request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
                     }
                 }
             }
             if (token == null) {
-                request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
             }
         }
         chain.doFilter(request, response);

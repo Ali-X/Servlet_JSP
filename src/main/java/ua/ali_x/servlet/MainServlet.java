@@ -80,7 +80,7 @@ public class MainServlet extends HttpServlet {
             forward(httpRequest, httpResponse, vm);
         } catch (Throwable e) {
             new RuntimeException("The error is " + e);
-            //      e.getStackTrace();
+            e.getStackTrace();
         }
     }
 

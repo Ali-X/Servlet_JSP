@@ -1,5 +1,6 @@
 package ua.ali_x.controller;
 
+import ua.ali_x.Model.Roles;
 import ua.ali_x.Model.User;
 import ua.ali_x.Service.CategoryService;
 import ua.ali_x.Service.UserService;
@@ -28,7 +29,7 @@ public class GetUserController implements Controller {
         if (user != null) {
             vm.setAttribute("user", user);
             vm.setCookie(new Cookie("token", user.getToken()));
-            if (user.isiAmAdmin()) {
+            if (user.getRoles().contains(Roles.ADMIN)) {
                 vm.setView("admin");
             } else {
                 vm.setView("categories");
