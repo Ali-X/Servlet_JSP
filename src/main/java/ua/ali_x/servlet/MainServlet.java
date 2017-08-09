@@ -15,24 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainServlet extends HttpServlet {
-
-    private GetUserController getUserController;
-    private CategoriesPageController categoriesPageController;
-    private CategoryController categoryController;
-    private ProductController productController;
-    private CreateUserController createUserController;
-    private AdminController adminController;
-    private HashMap<String, String> pages;
     private Map<Request, Controller> controllerMap;
 
     public void init() {
-        getUserController = Factory.getUserController();
-        categoriesPageController = Factory.getCategoriesPageController();
-        categoryController = Factory.getCategoryController();
-        productController = Factory.getProductController();
-        createUserController = Factory.getCreateUserController();
-        adminController = Factory.getAdminController();
-        //     pages = Factory.getPages();
         controllerMap = Factory.getControllerMap();
     }
 
@@ -43,24 +28,6 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
-        /*for (Map.Entry<String, String> page : pages.entrySet()) {
-            if (request.getRequestURI().equals(page.getKey())) {
-                switch (page.getKey()) {
-                    case "/root/login":
-                        adminController.process(request, response);
-                        //не использовать много контроллеров, а использовать много сервисов в одном котнтроллере
-                        categoriesPageController.process(request, response);
-                        //в юзер добавить поле проверки на роль
-                        getUserController.process(request, response);
-                        break;
-                    case "/root/registration":
-                        createUserController.process(request, response);
-                        categoriesPageController.process(request, response);
-                        request.getRequestDispatcher("/WEB-INF/views/categories.jsp").forward(request, response);
-                        break;
-                }
-            }
-        }*/
     }
 
     private void processRequest(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws ServletException, IOException {
@@ -79,8 +46,7 @@ public class MainServlet extends HttpServlet {
             setAttributes(httpRequest);
             forward(httpRequest, httpResponse, vm);
         } catch (Throwable e) {
-            new RuntimeException("The error is " + e);
-            e.getStackTrace();
+            throw new RuntimeException("The error is " + e);
         }
     }
 

@@ -32,8 +32,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.execute();
         } catch (SQLException e) {
-            new RuntimeException("There are problems with authentication");
-            e.printStackTrace();
+            throw new RuntimeException("There are problems with authentication" + e);
         }
         return user;
     }
@@ -77,8 +76,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             preparedStatement.close();
             user = new User(id, name, password, email, token, roles);
         } catch (SQLException e) {
-            new RuntimeException("There are problems with authentication");
-            e.printStackTrace();
+            throw new RuntimeException("There are problems with authentication" + e);
         }
         return user;
     }
@@ -110,8 +108,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             preparedStatement.close();
             user = new User(id, name, password, email, token, roles);
         } catch (SQLException e) {
-            new RuntimeException("There are problems with authentication");
-            e.printStackTrace();
+            throw new RuntimeException("There are problems with authentication" + e);
         }
         return user;
     }
