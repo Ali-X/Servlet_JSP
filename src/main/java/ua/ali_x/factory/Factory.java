@@ -1,11 +1,16 @@
 package ua.ali_x.factory;
 
-import ua.ali_x.DAO.*;
-import ua.ali_x.Service.*;
 import ua.ali_x.controller.*;
-import ua.ali_x.controller.dataBase.*;
+import ua.ali_x.controller.admin.*;
+import ua.ali_x.controller.admin.dataBase.*;
+import ua.ali_x.controller.category.CategoriesPageController;
+import ua.ali_x.controller.category.CategoryController;
+import ua.ali_x.controller.product.ProductController;
+import ua.ali_x.controller.user.CreateUserController;
+import ua.ali_x.controller.user.GetUserController;
+import ua.ali_x.dao.*;
+import ua.ali_x.service.*;
 import ua.ali_x.servlet.Request;
-import ua.ali_x.servlet.ViewModel;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,8 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Factory {
-
-    private static ViewModel vm = new ViewModel();
 
     //db
     public static Connection getConnection() {
@@ -90,16 +93,57 @@ public class Factory {
         controllerMap.put(new Request("GET", "/root/product"), Factory.getProductController());
         controllerMap.put(new Request("GET", "/root/registration"), Factory.getRegistrationPageController());
         controllerMap.put(new Request("GET", "/root/profile"), Factory.getProfileController());
+        controllerMap.put(new Request("GET", "/root/admin/user"), Factory.getUserSettingsViewController());
+        controllerMap.put(new Request("GET", "/root/admin/category"), Factory.getCategorySettingsViewController());
+        controllerMap.put(new Request("GET", "/root/admin/product"), Factory.getProductSettingsViewController());
+
         controllerMap.put(new Request("POST", "/root/login"), Factory.getUserController());
         controllerMap.put(new Request("POST", "/root/registration"), Factory.getCreateUserController());
 
-        controllerMap.put(new Request("POST", "/root/c_add"), Factory.getC_addController());
-        controllerMap.put(new Request("POST", "/root/p_add"), Factory.getP_addController());
-        controllerMap.put(new Request("POST", "/root/c_del"), Factory.getC_delController());
-        controllerMap.put(new Request("POST", "/root/p_del"), Factory.getP_delController());
-        controllerMap.put(new Request("POST", "/root/c_upd"), Factory.getC_updController());
-        controllerMap.put(new Request("POST", "/root/p_upd"), Factory.getP_updController());
+        controllerMap.put(new Request("POST", "/root/admin/category/add"), Factory.getC_addController());
+        controllerMap.put(new Request("POST", "/root/admin/product/add"), Factory.getP_addController());
+        controllerMap.put(new Request("GET", "/root/admin/category/del"), Factory.getC_delController());
+        controllerMap.put(new Request("GET", "/root/admin/product/del"), Factory.getP_delController());
+        controllerMap.put(new Request("POST", "/root/admin/category/upd"), Factory.getC_updController());
+        controllerMap.put(new Request("GET", "/root/admin/category/upd"), Factory.getEditCategoryViewController());
+        controllerMap.put(new Request("POST", "/root/admin/product/upd"), Factory.getP_updController());
+        controllerMap.put(new Request("GET", "/root/admin/product/upd"), Factory.getEditProductViewController());
+        controllerMap.put(new Request("GET", "/root/admin/user/del"), Factory.getU_delController());
+        controllerMap.put(new Request("POST", "/root/admin/user/role/add"), Factory.getUr_addController());
+        controllerMap.put(new Request("GET", "/root/admin/user/role/del"), Factory.getUr_delController());
         return controllerMap;
+    }
+
+    private static Controller getEditProductViewController() {
+        return new EditProductViewController();
+    }
+
+    private static Controller getEditCategoryViewController() {
+        return new EditCategoryViewController();
+    }
+
+    private static Controller getUr_delController() {
+        return new ur_delController(Factory.getUserService());
+    }
+
+    private static Controller getUr_addController() {
+        return new ur_addController(Factory.getUserService());
+    }
+
+    private static Controller getU_delController() {
+        return new u_delController(Factory.getUserService());
+    }
+
+    private static Controller getProductSettingsViewController() {
+        return new ProductSettingsViewController(Factory.getProductService(), Factory.getCategoriesService());
+    }
+
+    private static Controller getCategorySettingsViewController() {
+        return new CategorySettingsViewController(Factory.getCategoriesService());
+    }
+
+    private static Controller getUserSettingsViewController() {
+        return new UserSettingsViewController(Factory.getUserService());
     }
 
     private static Controller getP_updController() {
@@ -142,7 +186,4 @@ public class Factory {
         return new HomePageController();
     }
 
-    public static ViewModel getViewModel() {
-        return vm;
-    }
 }

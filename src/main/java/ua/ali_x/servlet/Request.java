@@ -1,9 +1,18 @@
 package ua.ali_x.servlet;
 
+import java.util.Map;
+
 public class Request {
 
     private String uri;
     private String requestMethod;
+    private Map<String, String[]> attributes;
+
+    public Request(String requestMethod, String uri, Map<String, String[]> attributes) {
+        this.uri = uri;
+        this.requestMethod = requestMethod;
+        this.attributes = attributes;
+    }
 
     public Request(String requestMethod, String uri) {
         this.uri = uri;
@@ -45,4 +54,11 @@ public class Request {
         this.requestMethod = requestMethod;
     }
 
+    public void setAttribute(String name, String[] value) {
+        attributes.put(name, value);
+    }
+
+    public String getAttribute(String name) {
+        return attributes.get(name)[0];
+    }
 }

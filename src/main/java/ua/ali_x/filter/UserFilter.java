@@ -1,8 +1,8 @@
 package ua.ali_x.filter;
 
-import ua.ali_x.DAO.UserDAOImpl;
-import ua.ali_x.Model.User;
+import ua.ali_x.dao.UserDAOImpl;
 import ua.ali_x.factory.Factory;
+import ua.ali_x.model.User;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
@@ -13,8 +13,8 @@ import java.util.List;
 
 public class UserFilter implements Filter {
 
-    private UserDAOImpl userDao;
     private final String TOKEN = "TOKEN";
+    private UserDAOImpl userDao;
     private List<String> protectedUrl = new ArrayList<>();
 
     @Override

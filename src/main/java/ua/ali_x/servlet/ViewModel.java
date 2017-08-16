@@ -7,19 +7,23 @@ import java.util.Map;
 public class ViewModel {
 
     private String view;
-    private Map<String, Object> model = new HashMap<>();
+    private Map<String, Object> attributes = new HashMap<>();
     private Cookie cookie;
 
-    public Map<String, Object> getModel() {
-        return model;
+    public static ViewModel of() {
+        return new ViewModel();
+    }
+
+    public Map<String, Object> getAttributes() {
+        return attributes;
     }
 
     public void setAttribute(String attrName, Object value) {
-        model.put(attrName, value);
+        attributes.put(attrName, value);
     }
 
     public Object getAttribute(String attrName) {
-        Object value = model.get(attrName);
+        Object value = attributes.get(attrName);
         return value;
     }
 

@@ -1,6 +1,6 @@
 package ua.ali_x.servlet;
 
-import ua.ali_x.controller.*;
+import ua.ali_x.controller.Controller;
 import ua.ali_x.factory.Factory;
 
 import javax.servlet.RequestDispatcher;
@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MainServlet extends HttpServlet {
@@ -31,8 +29,7 @@ public class MainServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws ServletException, IOException {
-        getAttributes(httpRequest);
-        Request request = new Request(httpRequest.getMethod(), httpRequest.getRequestURI());
+        Request request = new Request(httpRequest.getMethod(), httpRequest.getRequestURI(), httpRequest.getParameterMap());
         try {
             Controller controller = controllerMap.get(request);
             if (controller == null) {
@@ -43,7 +40,7 @@ public class MainServlet extends HttpServlet {
             if (cookie != null) {
                 httpResponse.addCookie(cookie);
             }
-            setAttributes(httpRequest);
+            setAttributes(httpRequest, vm);
             forward(httpRequest, httpResponse, vm);
         } catch (Throwable e) {
             throw new RuntimeException("The error is " + e);
@@ -62,17 +59,8 @@ public class MainServlet extends HttpServlet {
 
     }
 
-    private void getAttributes(HttpServletRequest request) {
-        Enumeration<String> e = request.getParameterNames();
-        while (e.hasMoreElements()) {
-            String name = (String) e.nextElement();
-            String[] value = request.getParameterValues(name);
-            Factory.getViewModel().setAttribute(name, value[0]);
-        }
-    }
-
-    private void setAttributes(HttpServletRequest request) {
-        Map<String, Object> model = Factory.getViewModel().getModel();
+    private void setAttributes(HttpServletRequest request, ViewModel vm) {
+        Map<String, Object> model = vm.getAttributes();
         for (Map.Entry<String, Object> entry : model.entrySet()) {
             request.setAttribute(entry.getKey(), entry.getValue());
         }

@@ -1,10 +1,9 @@
 package ua.ali_x.controller;
 
-import ua.ali_x.Model.Roles;
-import ua.ali_x.Model.User;
-import ua.ali_x.Service.CategoryService;
-import ua.ali_x.Service.UserService;
-import ua.ali_x.factory.Factory;
+import ua.ali_x.model.Roles;
+import ua.ali_x.model.User;
+import ua.ali_x.service.CategoryService;
+import ua.ali_x.service.UserService;
 import ua.ali_x.servlet.Request;
 import ua.ali_x.servlet.ViewModel;
 
@@ -12,8 +11,8 @@ import javax.servlet.http.Cookie;
 
 public class ProfileController implements Controller {
 
-    private UserService userService;
-    private CategoryService categoryService;
+    private final UserService userService;
+    private final CategoryService categoryService;
 
     public ProfileController(UserService userService, CategoryService categoryService) {
         this.userService = userService;
@@ -26,7 +25,6 @@ public class ProfileController implements Controller {
         String token = null;
         boolean iAmAdmin;
 
-        ViewModel vm = Factory.getViewModel();
         Cookie cookie = vm.getCookie();
 
         if (cookie != null) {

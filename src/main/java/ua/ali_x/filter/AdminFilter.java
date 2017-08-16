@@ -1,9 +1,9 @@
 package ua.ali_x.filter;
 
-import ua.ali_x.DAO.UserDAOImpl;
-import ua.ali_x.Model.Roles;
-import ua.ali_x.Model.User;
+import ua.ali_x.dao.UserDAOImpl;
 import ua.ali_x.factory.Factory;
+import ua.ali_x.model.Roles;
+import ua.ali_x.model.User;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
