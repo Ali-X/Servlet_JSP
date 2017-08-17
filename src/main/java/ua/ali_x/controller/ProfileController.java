@@ -46,8 +46,6 @@ public class ProfileController implements Controller {
                     vm.setAttribute("image", filePath);
                     vm.setAttribute("user", user);
                     vm.setView("userPage");
-                    //      vm.setAttribute("categories", categoryService.getAll());
-                    //       vm.setView("categories");
                 }
             }
         } else {

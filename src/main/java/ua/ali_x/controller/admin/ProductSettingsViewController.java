@@ -36,9 +36,9 @@ public class ProductSettingsViewController implements Controller {
         } else {
             sublist = list.subList(temp - recordsPerPage, noOfRecords);
         }
-        vm.setAttribute("employeeList", list);
         vm.setAttribute("noOfPages", noOfPages);
         vm.setAttribute("currentPage", page);
+
         vm.setAttribute("categories", categoryService.getAll());
         vm.setAttribute("products", sublist);
         vm.setView("adminProduct");

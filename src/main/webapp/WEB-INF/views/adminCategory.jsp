@@ -61,6 +61,41 @@
     </tr>
 </table>
 <br>
+<%--For displaying Previous link except for the 1st page --%>
+<c:if test="${currentPage != 1}">
+    <td><a class="pagination" href="
+            <c:url value="/root/admin/product">
+                 <c:param name="page" value="${currentPage - 1}" />
+            </c:url>
+        ">Previous</a></td>
+</c:if>
+
+<%--For displaying Page numbers.
+The when condition does not display a link for the current page--%>
+<c:forEach begin="1" end="${noOfPages}" var="i">
+    <c:choose>
+        <c:when test="${currentPage eq i}">
+            <td>${i}</td>
+        </c:when>
+        <c:otherwise>
+            <td><a class="pagination" href="
+                            <c:url value="/root/admin/product">
+                                <c:param name="page" value="${i}" />
+                            </c:url>
+                        ">${i}</a></td>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+
+<%--For displaying Next link --%>
+<c:if test="${currentPage lt noOfPages}">
+    <td><a class="pagination" href="
+            <c:url value="/root/admin/product">
+                 <c:param name="page" value="${currentPage + 1}" />
+            </c:url>
+        ">Next</a></td>
+</c:if>
+<br><br>
 <a href="<c:url value="/root/profile"/> ">Profile</a>
 <a href="<c:url value="/root/home"/> ">Home</a>
 </body>
