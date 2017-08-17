@@ -2,7 +2,6 @@ package ua.ali_x.controller;
 
 import ua.ali_x.model.Roles;
 import ua.ali_x.model.User;
-import ua.ali_x.service.CategoryService;
 import ua.ali_x.service.UserService;
 import ua.ali_x.servlet.Request;
 import ua.ali_x.servlet.ViewModel;
@@ -15,18 +14,15 @@ import java.nio.file.Paths;
 public class ProfileController implements Controller {
 
     private final UserService userService;
-    private final CategoryService categoryService;
 
-    public ProfileController(UserService userService, CategoryService categoryService) {
+    public ProfileController(UserService userService) {
         this.userService = userService;
-        this.categoryService = categoryService;
     }
 
     @Override
     public ViewModel process(Request request) {
         String TOKEN = "token";
         String token = null;
-        boolean iAmAdmin;
 
         Cookie cookie = vm.getCookie();
 

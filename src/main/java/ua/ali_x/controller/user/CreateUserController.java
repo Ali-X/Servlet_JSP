@@ -3,7 +3,6 @@ package ua.ali_x.controller.user;
 import ua.ali_x.controller.Controller;
 import ua.ali_x.model.Roles;
 import ua.ali_x.model.User;
-import ua.ali_x.service.CategoryService;
 import ua.ali_x.service.UserService;
 import ua.ali_x.servlet.Request;
 import ua.ali_x.servlet.ViewModel;
@@ -18,11 +17,9 @@ import java.util.Set;
 public class CreateUserController implements Controller {
 
     private final UserService userService;
-    private final CategoryService categoryService;
 
-    public CreateUserController(UserService userService, CategoryService categoryService) {
+    public CreateUserController(UserService userService) {
         this.userService = userService;
-        this.categoryService = categoryService;
     }
 
     @Override

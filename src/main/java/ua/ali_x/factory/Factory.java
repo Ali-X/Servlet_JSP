@@ -33,7 +33,7 @@ public class Factory {
 
     //user
     public static GetUserController getUserController() {
-        return new GetUserController(Factory.getUserService(), Factory.getCategoriesService());
+        return new GetUserController(Factory.getUserService());
     }
 
     private static UserService getUserService() {
@@ -75,7 +75,7 @@ public class Factory {
     }
 
     public static CreateUserController getCreateUserController() {
-        return new CreateUserController(Factory.getUserService(), Factory.getCategoriesService());
+        return new CreateUserController(Factory.getUserService());
     }
 
     //admin
@@ -171,7 +171,7 @@ public class Factory {
     }
 
     private static Controller getProfileController() {
-        return new ProfileController(Factory.getUserService(), Factory.getCategoriesService());
+        return new ProfileController(Factory.getUserService());
     }
 
     private static Controller getRegistrationPageController() {
