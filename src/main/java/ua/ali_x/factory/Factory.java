@@ -80,7 +80,7 @@ public class Factory {
 
     //admin
     public static AdminController getAdminController() {
-        return new AdminController(Factory.getUserService());
+        return new AdminController();
     }
 
     public static Map<Request, Controller> getControllerMap() {
