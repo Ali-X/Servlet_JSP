@@ -38,6 +38,13 @@
                         </td>
                         <td>
                             <a href="
+                                <c:url value="/root/admin/user/upd">
+                                    <c:param name="u_id" value="${u.id}" />
+                                </c:url>
+                            ">edit</a>
+                        </td>
+                        <td>
+                            <a href="
                                 <c:url value="/root/admin/user/del">
                                     <c:param name="u_id" value="${u.id}" />
                                 </c:url>

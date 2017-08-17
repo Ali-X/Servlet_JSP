@@ -64,7 +64,21 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     }
 
     public void update(User user) {
-
+        try {
+            PreparedStatement preparedStatement;
+            String preparedQuery = "UPDATE USERS " +
+                    "SET USERNAME = ?, PASSWORD = ?, EMAIL = ? " +
+                    "WHERE ID = ?;";
+            preparedStatement = connection.prepareStatement(preparedQuery);
+            preparedStatement.setString(1, user.getUserName());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setInt(4, user.getId());
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("There are problems with authentication" + e);
+        }
     }
 
     @Override

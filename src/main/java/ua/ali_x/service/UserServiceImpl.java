@@ -59,6 +59,11 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
+    public void update(Integer id, String username, String password, String email) {
+        userDao.update(new User(id, username, password, email, null, null));
+    }
+
+    @Override
     public List<User> getAll() {
         return userDao.getAll();
     }

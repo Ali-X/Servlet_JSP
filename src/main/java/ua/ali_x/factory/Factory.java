@@ -108,10 +108,20 @@ public class Factory {
         controllerMap.put(new Request("GET", "/root/admin/category/upd"), Factory.getEditCategoryViewController());
         controllerMap.put(new Request("POST", "/root/admin/product/upd"), Factory.getP_updController());
         controllerMap.put(new Request("GET", "/root/admin/product/upd"), Factory.getEditProductViewController());
+        controllerMap.put(new Request("POST", "/root/admin/user/upd"), Factory.getU_updController());
+        controllerMap.put(new Request("GET", "/root/admin/user/upd"), Factory.getEditUserViewController());
         controllerMap.put(new Request("GET", "/root/admin/user/del"), Factory.getU_delController());
         controllerMap.put(new Request("POST", "/root/admin/user/role/add"), Factory.getUr_addController());
         controllerMap.put(new Request("GET", "/root/admin/user/role/del"), Factory.getUr_delController());
         return controllerMap;
+    }
+
+    private static Controller getEditUserViewController() {
+        return new EditUserViewController();
+    }
+
+    private static Controller getU_updController() {
+        return new u_updController(Factory.getUserService());
     }
 
     private static Controller getEditProductViewController() {

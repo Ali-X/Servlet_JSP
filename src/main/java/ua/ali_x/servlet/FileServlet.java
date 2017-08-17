@@ -12,6 +12,7 @@ public class FileServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+
         String username = request.getParameter("name");
         Path currentRelativePath = Paths.get("images");
         String uploadPath = currentRelativePath.toAbsolutePath().toString();
@@ -26,7 +27,7 @@ public class FileServlet extends HttpServlet {
         BufferedInputStream bin = new BufferedInputStream(fin);
         BufferedOutputStream bout = new BufferedOutputStream(out);
         int ch = 0;
-        ;
+
         while ((ch = bin.read()) != -1) {
             bout.write(ch);
         }

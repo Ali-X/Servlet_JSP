@@ -49,4 +49,9 @@
         <url-pattern>/root/profile/*</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>UserFilter</filter-name>
+        <url-pattern>/root/admin/user/upd</url-pattern>
+    </filter-mapping>
+
 </web-app>

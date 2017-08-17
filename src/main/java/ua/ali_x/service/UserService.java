@@ -24,4 +24,6 @@ public interface UserService {
     void delRole(Integer id, String role);
 
     Set<Roles> getAllRoles();
+
+    void update(Integer id, String username, String password, String email);
 }
