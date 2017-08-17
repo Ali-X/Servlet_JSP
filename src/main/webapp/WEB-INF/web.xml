@@ -11,6 +11,15 @@
     </description>
 
     <servlet>
+        <servlet-name>fileServlet</servlet-name>
+        <servlet-class>ua.ali_x.servlet.FileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>fileServlet</servlet-name>
+        <url-pattern>/root/image/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>MainServlet</servlet-name>
         <servlet-class>ua.ali_x.servlet.MainServlet</servlet-class>
     </servlet>

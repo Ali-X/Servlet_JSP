@@ -22,7 +22,9 @@
         </td>
         <td>
             <h2>Image:</h2>
-            <img src="${pageContext.request.contextPath}/images/${requestScope.user.userName}.png" alt="Image"
+            <img src="<c:url value="/root/image">
+                                    <c:param name="name" value="${requestScope.user.userName}" />
+                                </c:url>" alt="Image"
                  width="200" height="200"/>
         </td>
     </tr>
