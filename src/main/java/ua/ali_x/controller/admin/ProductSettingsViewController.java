@@ -23,18 +23,24 @@ public class ProductSettingsViewController implements Controller {
 
         int page = 1;
         int recordsPerPage = 5;
+        int temp;
         if (request.getAttribute("page") != null)
             page = Integer.parseInt(request.getAttribute("page"));
         List<Product> list = productService.getAll();
-        List<Product> sublist = list.subList((page - 1) * recordsPerPage,
-                recordsPerPage);
+        List<Product> sublist;
+        temp = page * recordsPerPage;
         int noOfRecords = list.size();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        if (temp < noOfRecords) {
+            sublist = list.subList(temp - recordsPerPage, temp);
+        } else {
+            sublist = list.subList(temp - recordsPerPage, noOfRecords);
+        }
         vm.setAttribute("employeeList", list);
         vm.setAttribute("noOfPages", noOfPages);
         vm.setAttribute("currentPage", page);
         vm.setAttribute("categories", categoryService.getAll());
-        vm.setAttribute("products", productService.getAll());
+        vm.setAttribute("products", sublist);
         vm.setView("adminProduct");
         return vm;
     }

@@ -61,6 +61,10 @@ public class Request {
     }
 
     public String getAttribute(String name) {
-        return attributes.get(name)[0];
+        if (attributes.get(name) == null) {
+            return null;
+        } else {
+            return attributes.get(name)[0];
+        }
     }
 }

@@ -142,6 +142,25 @@ a:hover {
     color: #F4FDD9;
 }
 
+.pagination {
+    width: 50px;
+    height: 0%;
+    background-color: #F4FDD9;
+    border: 0px solid #224057;
+    color: #224057;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    padding-top: 0%;
+    cursor: pointer;
+    -webkit-transition-duration: 0.0s; /* Safari */
+    transition-duration: 0.0s;
+}
+
+.pagination:hover {
+
+}
+
 table {
     text-align: center;
     width: 80%;
