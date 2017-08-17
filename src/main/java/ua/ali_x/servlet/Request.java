@@ -1,5 +1,6 @@
 package ua.ali_x.servlet;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Request {
@@ -17,6 +18,7 @@ public class Request {
     public Request(String requestMethod, String uri) {
         this.uri = uri;
         this.requestMethod = requestMethod;
+        this.attributes = new HashMap<>();
     }
 
     public String getUri() {

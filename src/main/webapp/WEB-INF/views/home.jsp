@@ -13,5 +13,7 @@
 <a class="button" href="<c:url value="/root/login"/> ">Log in</a>
 <br><br>
 <a class="button" href="<c:url value="/root/profile"/> ">My Profile</a>
+<br><br>
+<a class="button" href="<c:url value="/root/categories"/> ">Categories</a>
 </body>
 </html>

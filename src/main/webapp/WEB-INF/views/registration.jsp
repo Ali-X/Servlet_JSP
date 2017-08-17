@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>Registration</h1>
-<form method="post" action="<c:url value="/root/registration"/>">
+<form method="post" action="<c:url value="/root/registration"/>" enctype="multipart/form-data">
     <h4>Username:</h4>
     <input title="UserName" type="text" name="userName">
     <h4>Password:</h4>
@@ -17,6 +17,8 @@
     <h4>Email:</h4>
     <input title="Email" type="email" name="email">
     <br>
+    <h4>Image:</h4>
+    <input type="file" name="file" title="select image..."/>
     <br>
     <input type="submit" value="Submit">
     <br>

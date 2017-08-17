@@ -9,6 +9,9 @@ import ua.ali_x.servlet.Request;
 import ua.ali_x.servlet.ViewModel;
 
 import javax.servlet.http.Cookie;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,8 +40,13 @@ public class CreateUserController implements Controller {
         if (user.getRoles().contains(Roles.ADMIN)) {
             vm.setView("admin");
         } else {
-            vm.setView("categories");
-            vm.setAttribute("categories", categoryService.getAll());
+            Path currentRelativePath = Paths.get("images");
+            String uploadPath = currentRelativePath.toAbsolutePath().toString();
+            String fileName = user.getUserName() + ".png";
+            String filePath = uploadPath + File.separator + fileName;
+            vm.setAttribute("image", filePath);
+            vm.setAttribute("user", user);
+            vm.setView("userPage");
         }
         return vm;
     }

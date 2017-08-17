@@ -8,6 +8,9 @@ import ua.ali_x.servlet.Request;
 import ua.ali_x.servlet.ViewModel;
 
 import javax.servlet.http.Cookie;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class ProfileController implements Controller {
 
@@ -36,8 +39,15 @@ public class ProfileController implements Controller {
                 if (user.getRoles().contains(Roles.ADMIN)) {
                     vm.setView("admin");
                 } else {
-                    vm.setAttribute("categories", categoryService.getAll());
-                    vm.setView("categories");
+                    Path currentRelativePath = Paths.get("images");
+                    String uploadPath = currentRelativePath.toAbsolutePath().toString();
+                    String fileName = user.getUserName() + ".png";
+                    String filePath = uploadPath + File.separator + fileName;
+                    vm.setAttribute("image", filePath);
+                    vm.setAttribute("user", user);
+                    vm.setView("userPage");
+                    //      vm.setAttribute("categories", categoryService.getAll());
+                    //       vm.setView("categories");
                 }
             }
         } else {

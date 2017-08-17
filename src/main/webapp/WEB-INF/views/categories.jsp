@@ -9,7 +9,7 @@
     <title>Welcome</title>
 </head>
 <body>
-<h1>Hello, ${requestScope.user.userName}</h1>
+<h1>Categories</h1>
 <br>
 <h4>Choose category:</h4>
 <div class="dropdown">
